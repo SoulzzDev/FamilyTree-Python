@@ -22,9 +22,9 @@ entryBox.pack()
 
 ## gets the text from the entrybox
 def TextLabel():
-    label = Label(text=entryBox.get())
+    label = Label(text="entryBox.get()")
     label.pack()
-    label.place(x=190, y=100)
+    label.place(x=160, y=100)
 
 textButton = Button(text="Enter", command=TextLabel())
 textButton.pack()
