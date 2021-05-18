@@ -11,10 +11,13 @@ def OpenFile():
     img.image = render
     img.place(x=0, y=0)
 
+def TextLabel():
+    entryBox = Entry()
+    entryBox.pack()
 
 window = Tk()
-window.geometry("400x400")
-
+window.geometry("405x450")
 button = Button(text='Open', command=OpenFile)
-button.pack()
+button.place(x=190, y=410)
+TextLabel()
 window.mainloop()
