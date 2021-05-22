@@ -1,39 +1,48 @@
-from tkinter import *
+from PyQt5 import QtGui
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QFileDialog, QLabel, QTextEdit
 import sys
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
-from tkinter import filedialog
-from PyQt5.QtCore import *
-from PIL import Image, ImageTk
+
+from PyQt5.QtGui import QPixmap
 
 
-class app(QMainWindow):
-
+class App(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("File Reader")
-        self.setGeometry(100, 100, 600, 400)
-        self.InitUI()
-        self.show()
 
+        self.title = "Kuori OY"
+        self.top = 200
+        self.left = 500
+        self.width = 400
+        self.height = 300
+
+        self.InitUI()
 
     def InitUI(self):
-        button = QPushButton('moi', self)
-        button.move(100, 70)
-        button.clicked.connect(self.OpenFile)
+        self.setWindowIcon(QtGui.QIcon("kuori_logo.jpg"))
+        self.setWindowTitle(self.title)
+        self.setGeometry(self.left, self.top, self.width, self.height)
 
-    ## File reader
-    def OpenFile(self):
+        vbox = QVBoxLayout()
+
+        self.btn1 = QPushButton("Open Image")
+        self.btn1.clicked.connect(self.openFile)
+
+        vbox.addWidget(self.btn1)
+
+        self.label = QLabel("Image position")
+        vbox.addWidget(self.label)
+
+        self.setLayout(vbox)
+
+        self.show()
+
+    def openFile(self):
         filepath = QFileDialog.getOpenFileName(None, "Open file", "All Files","Image files (*.jpg *.png")
-        print(filepath)
-        file = Image.open(filepath)
-        file_new = file.resize((400, 400))
-        render = ImageTk.PhotoImage(file_new)
-        img = Label(image=render)
-        img.image = render
-        img.place(x=0, y=0)
+        imagePath = filepath[0]
+        pixmap = QPixmap(imagePath)
+        self.label.setPixmap(QPixmap(pixmap))
+        self.resize(pixmap.width(), pixmap.height())
 
-
-App = QApplication(sys.argv)
-window = app()
-sys.exit(App.exec())
+app = QApplication(sys.argv)
+window = App()
+sys.exit(app.exec())
