@@ -45,7 +45,7 @@ class App(QWidget):
         self.label.setText(self.textLine.text())
 
     def openFile(self):
-        filepath = QFileDialog.getOpenFileName(None, "Open file", "All Files","Image files (*.jpg *.png")
+        filepath = QFileDialog.getOpenFileName()
         imagePath = filepath[0]
         pixmap = QPixmap(imagePath)
         pixmap = pixmap.scaled(250, 350, Qt.KeepAspectRatio)
