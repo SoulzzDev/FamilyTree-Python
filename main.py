@@ -5,8 +5,7 @@ from PyQt5.QtCore import *
 
 from PyQt5.QtGui import QPixmap
 
-
-class App(QWidget):
+class Window(QWidget):
     def __init__(self):
         super().__init__()
 
@@ -16,43 +15,65 @@ class App(QWidget):
         self.width = 400
         self.height = 300
 
-        self.InitUI()
+        self.UI()
 
-    def InitUI(self):
+    def UI(self):
         self.setWindowIcon(QtGui.QIcon("kuori_logo.jpg"))
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
 
-        vbox = QVBoxLayout()
+        self.vbox = QVBoxLayout()
 
-        self.textLine = QLineEdit()
-        self.textLine.editingFinished.connect(self.enterPressed)
-        vbox.addWidget(self.textLine)
+        self.btn1 = QPushButton("Add +")
+        self.btn1.clicked.connect(self.buttonPressed)
+        self.vbox.addWidget(self.btn1)
 
-        self.label = QLabel()
-        vbox.addWidget(self.label)
-
-        self.btn1 = QPushButton("Open Image")
-        self.btn1.clicked.connect(self.openFile)
-        vbox.addWidget(self.btn1)
-
-        self.setLayout(vbox)
+        self.setLayout(self.vbox)
 
         self.show()
 
+    def buttonPressed(self):
+        class FileReader(QWidget):
+            def __init__(self):
+                super().__init__()
 
-    def enterPressed(self):
-        self.label.setText(self.textLine.text())
+                self.InitUI()
 
-    def openFile(self):
-        filepath = QFileDialog.getOpenFileName()
-        imagePath = filepath[0]
-        pixmap = QPixmap(imagePath)
-        pixmap = pixmap.scaled(250, 350, Qt.KeepAspectRatio)
-        self.label.setPixmap(pixmap)
-#        self.resize(pixmap.width(), pixmap.height())
+            def InitUI(self):
+                vbox = QVBoxLayout()
+
+                self.textLine = QLineEdit()
+                self.textLine.editingFinished.connect(self.enterPressed)
+                vbox.addWidget(self.textLine)
+
+                self.label = QLabel()
+                vbox.addWidget(self.label)
+
+                self.btn1 = QPushButton("Open Image")
+                self.btn1.clicked.connect(self.openFile)
+                vbox.addWidget(self.btn1)
+
+                self.setLayout(vbox)
+
+                self.show()
+
+            def enterPressed(self):
+                self.label.setText(self.textLine.text())
+
+            def openFile(self):
+                filepath = QFileDialog.getOpenFileName()
+                imagePath = filepath[0]
+                pixmap = QPixmap(imagePath)
+                pixmap = pixmap.scaled(250, 350, Qt.KeepAspectRatio)
+                self.label.setPixmap(pixmap)
+
+        #        self.resize(pixmap.width(), pixmap.height())
+        self.FileReaderClass = FileReader()
+        self.vbox.addWidget(self.FileReaderClass)
+        self.FileReaderClass.show()
+
 
 
 app = QApplication(sys.argv)
-window = App()
+window = Window()
 sys.exit(app.exec())
