@@ -57,6 +57,8 @@ class Window(QWidget):
 
                 self.show()
 
+                self.showMaximized()
+
             def enterPressed(self):
                 self.label.setText(self.textLine.text())
 
@@ -72,8 +74,16 @@ class Window(QWidget):
         self.vbox.addWidget(self.FileReaderClass)
         self.FileReaderClass.show()
 
+#stylesheet = """
+#    Window {
+#        background-image: url("D:/blender kamat/JarkonLatexMenu3");
+#        background-repeat: no-repeat;
+#        background-position: center;
+#    }
+#"""
 
-
+import sys
+#app.setStyleSheet(stylesheet)
 app = QApplication(sys.argv)
 window = Window()
 sys.exit(app.exec())
